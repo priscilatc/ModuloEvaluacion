@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import entidades.TutorTecnico;
+import vistas.VW_alumnosasignados_tutort;
+import vistas.VW_est_tutor;
 import vistas.VW_tutor_tecnico;
 
 public class DTTutorTecnico {
@@ -327,4 +329,100 @@ public class DTTutorTecnico {
 		}		
 		return t;
 	}
+	
+	public VW_est_tutor getTutorTecnico(int idusuario)
+	{
+		VW_est_tutor vwt = new VW_est_tutor();
+		String sql = "Select * from public.vista_est_tutor where idusuario = ?";
+		
+		try 
+		{
+			c = PoolConexion.getConnection();
+			ps = c.prepareStatement(sql, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE, ResultSet.HOLD_CURSORS_OVER_COMMIT);
+			ps.setInt(1, idusuario);
+			rs = ps.executeQuery();
+			if(rs.next())
+			{
+				vwt.setNombre(rs.getString("nombre"));				
+				vwt.setCargo(rs.getString("cargo"));
+				vwt.setTrato(rs.getString("trato"));
+				vwt.setCorreo(rs.getString("correo"));
+				vwt.setOrganizacion(rs.getString("organizacion"));
+			}
+		} 
+		catch (SQLException e) 
+		{
+			System.err.println("DATOS: error getEst(): " + e.getMessage());
+			e.printStackTrace();
+		}
+		finally 
+		{
+			try 
+			{
+				if(rsTutort != null)
+				{
+					rsTutort.close();
+				}
+				if(c != null)
+				{
+					c.close();
+				}
+			} 
+			catch (Exception e2) 
+			{
+				System.err.println("DT Estudiante: Error al cerrar conexion " + e2.getMessage());
+				e2.printStackTrace();
+			}
+		}		
+		return vwt;		
+	}
+	
+	public ArrayList<VW_alumnosasignados_tutort> getAlumnosAsignados(int idusuario) {
+		
+		ArrayList<VW_alumnosasignados_tutort> alumnosasignados = new ArrayList<VW_alumnosasignados_tutort>();
+		String sql = "Select * from public.vista_alumnosasignados_tutort where idusuario = ?";
+		
+		try 
+		{
+			c = PoolConexion.getConnection();
+			ps = c.prepareStatement(sql, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE, ResultSet.HOLD_CURSORS_OVER_COMMIT);
+			ps.setInt(1, idusuario);
+			rs = ps.executeQuery();
+			while(rs.next())
+			{
+				VW_alumnosasignados_tutort vwa = new VW_alumnosasignados_tutort();
+				vwa.setIdestudiante(rs.getInt("idestudiante"));
+				vwa.setNombre(rs.getString("nombre"));
+				
+				alumnosasignados.add(vwa);
+			}
+			}
+		catch (SQLException e) 
+		{
+			System.err.println("DATOS: error getEst(): " + e.getMessage());
+			e.printStackTrace();
+		}
+		finally 
+		{
+			try 
+			{
+				if(rsTutort != null)
+				{
+					rsTutort.close();
+				}
+				if(c != null)
+				{
+					c.close();
+				}
+			} 
+			catch (Exception e2) 
+			{
+				System.err.println("DT Estudiante: Error al cerrar conexion " + e2.getMessage());
+				e2.printStackTrace();
+			}
+		}		
+		return alumnosasignados;
+		
+	}
+			
 }

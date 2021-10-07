@@ -50,14 +50,14 @@ public class SLlog extends HttpServlet {
 
 			u.setUsuario(usuario);
 			u.setPwd(pwd);
-			
+						
 			if(dtu.dtverificarLogin(u)){
 				
 				
 				HttpSession hts = request.getSession(true);
 				 hts.setMaxInactiveInterval(60*30);
 				 hts.setAttribute("login", usuario);
-				 hts.setAttribute("id", u.getIdUsuario());
+				 
 				 response.sendRedirect("index.jsp");
 			}
 			else{

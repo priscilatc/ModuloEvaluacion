@@ -1,4 +1,6 @@
-<%@page import="vistas.VW_estinfo" %>
+<%@page import="entidades.*" %>
+<%@page import="datos.*" %>
+<%@page import="vistas.*" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -10,10 +12,14 @@
 	    response.setDateHeader("Expires", 0);
 	    response.setDateHeader("Expires", -1);
 	      
-		
 		String loginUser = "";
 		loginUser = (String)session.getAttribute("login");
-		loginUser = loginUser==null?"":loginUser;
+		
+		DTUsuario dtu = new DTUsuario();
+		DTEstudiante dte = new DTEstudiante();
+		Estudiante e = new Estudiante();
+		
+		e = dte.getEstudiante(dtu.conseguirID(loginUser));
 		
 		if(loginUser.equals(""))
 		{
@@ -47,7 +53,7 @@
     
      <!-- Sidebar -->
         
-        <jsp:include page="WEB-INF/layout/sidebar.jsp"></jsp:include>
+        <jsp:include page="WEB-INF/layout/sidebarEst.jsp"></jsp:include>
         
         <!-- End of Sidebar -->
 
@@ -81,17 +87,14 @@
 						</div>
 						
 							<div class="table-responsive">
-								<table class="table borderless" id="tblnivel" width="130px"
-									cellspacing="0">	
-									<%VW_estinfo infoEst=(VW_estinfo)request.getAttribute("infoEst"); %>							
+								<table class="table borderless" id="tblInfo" width="130px"
+									cellspacing="0">															
 									<tbody>
-									<tr><th WIDTH="50" >Usuario</th><td><%=infoEst.getUsuario() %></td></tr>
-									<tr><th WIDTH="50" >Nombre</th><td><%=infoEst.getNombre() %></td></tr>
-                                    <tr><th WIDTH="50" >Correo</th><td><%=infoEst.getCorreo() %></td></tr>
-                                    <tr><th WIDTH="50" >Celular</th><td><%=infoEst.getCelular()%></td></tr>
-                                    <tr><th WIDTH="50" >Condición</th><td><%=infoEst.getCondicion()%></td></tr>
-                                    <tr><th WIDTH="50" >Sexo</th><td><%=infoEst.getSexo() %></td></tr>
-                                    <tr><th WIDTH="50" >Coordinación</th><td><%=infoEst.getCoordinacion() %></td></tr>                                                                     
+									<tr><th WIDTH="50" >Nombres</th><td><%=e.getNombres() %></td></tr>
+									<tr><th WIDTH="50" >Apellidos</th><td><%=e.getApellidos()%></td></tr>
+                                    <tr><th WIDTH="50" >Correo</th><td><%=e.getCorreoInstitucional()%></td></tr>
+                                    <tr><th WIDTH="50" >Celular</th><td><%=e.getCelular()%></td></tr>
+                                    <tr><th WIDTH="50" >Condición</th><td><%=e.getCondicion()%></td></tr>                                                                    
 									</tbody>
 								</table>
 						

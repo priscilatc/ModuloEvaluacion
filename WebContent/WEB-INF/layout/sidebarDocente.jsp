@@ -27,7 +27,7 @@
 		<li class="nav-item">
     
 	<li class="nav-item">
-        <a class="nav-link" href="AlumnoAsignado.jsp">
+        <a class="nav-link" href="ListaAlumnosAsignados.jsp">
           <i class="fas fa-user-graduate"></i>      
           <span>Alumnos asignados </span></a>
      </li>

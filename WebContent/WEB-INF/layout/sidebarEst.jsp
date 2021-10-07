@@ -57,8 +57,8 @@
 			aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
 			<div class="bg-white py-2 collapse-inner rounded">
 				<h6 class="collapse-header">Tutores</h6>
-				<a class="collapse-item" href="ListaEvaluacion.jsp">Tutor tecnico</a> 
-				<a class="collapse-item" href="ListaNivel.jsp">Tutor acedemico</a> 
+				<a class="collapse-item" href="ViewTutorTecnico.jsp">Tutor Técnico</a> 
+				<a class="collapse-item" href="ViewTutorAcademico.jsp">Tutor Academico</a> 
 			</div>
 		</div></li>
 	

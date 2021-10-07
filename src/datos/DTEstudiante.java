@@ -316,4 +316,54 @@ public class DTEstudiante {
 		return es;
 	}
 	
+	public Estudiante getEstudiante(int idusuario)
+	{
+		Estudiante vwe = new Estudiante();
+		String sql = "Select * from public.estudiante where estado <> 3 and idusuario = ?";
+		
+		try 
+		{
+			c = PoolConexion.getConnection();
+			ps = c.prepareStatement(sql, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE, ResultSet.HOLD_CURSORS_OVER_COMMIT);
+			ps.setInt(1, idusuario);
+			rs = ps.executeQuery();
+			if(rs.next())
+			{
+
+				vwe.setIdEstudiante(rs.getInt("idestudiante"));
+				vwe.setNombres(rs.getString("nombres"));
+				vwe.setApellidos(rs.getString("apellidos"));
+				vwe.setCorreoInstitucional(rs.getString("correoinstitucional"));
+				vwe.setCelular(rs.getString("celular"));
+				vwe.setCondicion(rs.getString("condicion"));	
+				vwe.setCarneuca(rs.getString("carneuca"));
+			}
+		} 
+		catch (SQLException e) 
+		{
+			System.err.println("DATOS: error getEst(): " + e.getMessage());
+			e.printStackTrace();
+		}
+		finally 
+		{
+			try 
+			{
+				if(rsEst != null)
+				{
+					rsEst.close();
+				}
+				if(c != null)
+				{
+					c.close();
+				}
+			} 
+			catch (Exception e2) 
+			{
+				System.err.println("DT Estudiante: Error al cerrar conexion " + e2.getMessage());
+				e2.printStackTrace();
+			}
+		}		
+		return vwe;
+	}
+	
 }

@@ -1,3 +1,7 @@
+<%@page import="entidades.*" %>
+<%@page import="datos.*" %>
+<%@page import="vistas.*" %>
+<%@page import="java.util.ArrayList" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -12,7 +16,12 @@
 		
 		String loginUser = "";
 		loginUser = (String)session.getAttribute("login");
-		loginUser = loginUser==null?"":loginUser;
+		
+		DTUsuario dtu = new DTUsuario();
+		DTDocente dtd = new DTDocente();
+		ArrayList<VW_alumnosasignados_doc> alumnosasignados = new ArrayList<VW_alumnosasignados_doc>();
+		
+		alumnosasignados = dtd.getAlumnosAsignados(dtu.conseguirID(loginUser));
 		
 		if(loginUser.equals(""))
 		{
@@ -53,7 +62,7 @@
 
 		<!-- Sidebar -->
 		
-		<jsp:include page="WEB-INF/layout/sidebar.jsp"></jsp:include>
+		<jsp:include page="WEB-INF/layout/sidebarDocente.jsp"></jsp:include>
 		
 		<!-- End of Sidebar -->
 
@@ -75,12 +84,13 @@
 					<!-- Page Heading -->
 					<h1 class="h3 mb-2 text-gray-800">Lista de Alumnos Asignados</h1>
 					
-					<h6 class="m-0 font-weight-bold text-primary"> Lista de Alumnos Asignados	<i class="fa fa-question-circle" data-toggle="tooltip" data-placement="right" title="Tooltip on right"></i>
+					<h6 class="m-0 font-weight-bold text-primary"> Lista de Alumnos Asignados	<i class="fa fa-question-circle" data-toggle="tooltip" data-placement="right" 
+					title="Lista de Alumnos Asignados en la cual puede ver sus datos"></i>
 							</h6>
 						<hr>
 						
 						<a href="index.jsp">Inicio</a> /
-						<a href="ListaAlumnosAsignados.jsp">Lista de Alumnos Asignados</a> 
+						<a href="ListaAlumnosAsignadosD.jsp">Lista de Alumnos Asignados</a> 
 			
 						
 					<hr>
@@ -98,21 +108,42 @@
 									cellspacing="0">
 									<thead>
                                         <tr>
-                                            <th>Nombres</th>
-                                            <th>Apellidos</th>
-                                            <th>Correo Institucional</th>
+                                            <th>Nombre</th>                                          
                                             <th>Opciones</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
                                         <tr>
-                                            <th>Nombres</th>
-                                            <th>Apellidos</th>
-                                            <th>Correo Institucional</th>
+                                            <th>Nombre</th>
                                             <th>Opciones</th>
                                         </tr>
                                     </tfoot>
-									
+									<tbody>
+										<tr>
+											<%
+											for(VW_alumnosasignados_doc vwa: alumnosasignados)
+											{
+											%>
+											<td><%=vwa.getNombre()%></td>
+											<td>
+											<span>
+                                      		 Detalle
+              								 <a onclick="verDetalle(<%=vwa.getIdestudiante() %>);">
+              									<i class="fas fa-align-justify" data-toggle="tooltip" data-placement="right" title="Eliminar"></i>
+              								</a>
+	              							</span>
+	              							<span>
+	              								Evaluar
+	              								<a onclick="evaluar(<%=vwa.getIdestudiante() %>)">
+	              									<i class="fas fa-edit" data-toggle="tooltip" data-placement="right" title="Editar"></i>
+	              								</a>
+              							</span>
+											</td>
+										</tr>
+										<%
+											}
+										%>
+									</tbody>
 								</table>
 							</div>
 						</div>
@@ -190,6 +221,17 @@
 	            }
 	        });
 	    });
+	    
+	    function verDetalle(idestudiante)
+		{
+			window.location.href="DetalleAlumno.jsp?idestudiante="+idestudiante;
+			location.reload
+		}
+	    function evaluar(idestudiante)
+		{
+			window.location.href="EvaluacionTecnica.jsp?idestudiante="+idestudiante;
+			location.reload
+		}
 	 </script>
 	
 </body>

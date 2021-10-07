@@ -12,15 +12,9 @@
 	    response.setDateHeader("Expires", 0);
 	    response.setDateHeader("Expires", -1);
 	      
-		
 		String loginUser = "";
 		loginUser = (String)session.getAttribute("login");
-
-		DTUsuario dtu = new DTUsuario();
-		DTTutorTecnico dtt = new DTTutorTecnico();
-		VW_est_tutor t = new VW_est_tutor();
 		
-		t = dtt.getTutorTecnico(dtu.conseguirID(loginUser));
 		
 		if(loginUser.equals(""))
 		{
@@ -34,7 +28,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Modulo Evaluación - Area Personal</title>
+    <title>Modulo Evaluación</title>
 
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.css" rel="stylesheet" type="text/css">
@@ -51,12 +45,7 @@
 
     <!-- Page Wrapper -->
     <div id="wrapper">
-
-        <!-- Sidebar -->
-        
-        <jsp:include page="WEB-INF/layout/sidebarEst.jsp"></jsp:include>
-        
-        <!-- End of Sidebar -->
+    
 
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
@@ -73,10 +62,11 @@
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
 
-                    <!-- Page Heading -->
-                            <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Perfil del Tutor Tecnico</h1>
-                       
+                    <!-- Page Heading -->                   
+                        <h1 class="h3 mb-0 text-gray-800">Perfil del Alumno</h1>                       
+                       <hr>						
+						<a href="index.jsp">Inicio</a>
+						<hr>
                     </div>
 
                     <!-- Content Row -->
@@ -86,16 +76,23 @@
 							<h6 class="m-0 font-weight-bold text-primary">Datos Personales</h6>
 						
 						</div>
+						<%
+							String idestudiante = request.getParameter("idestudiante");
+							
+							Estudiante es= new Estudiante();
+							DTEstudiante dte = new DTEstudiante();
+							es=dte.getEst(Integer.parseInt(idestudiante));
+						%>
 						
 							<div class="table-responsive">
 								<table class="table borderless" id="tblInfo" width="130px"
 									cellspacing="0">															
-									<tbody>									
-									<tr><th WIDTH="50" >Nombres</th><td><%=t.getNombre() %></td></tr>
-									<tr><th WIDTH="50" >Cargo</th><td><%=t.getCargo()%></td></tr>
-                                    <tr><th WIDTH="50" >Correo</th><td><%=t.getCorreo()%></td></tr>
-                                    <tr><th WIDTH="50" >Trato</th><td><%=t.getTrato()%></td></tr>
-                                    <tr><th WIDTH="50" >Organización</th><td><%=t.getOrganizacion()%></td></tr>                                                                    
+									<tbody>
+									<tr><th WIDTH="50" >Nombres</th><td><%=es.getNombres() %></td></tr>
+									<tr><th WIDTH="50" >Apellidos</th><td><%=es.getApellidos()%></td></tr>
+                                    <tr><th WIDTH="50" >Correo</th><td><%=es.getCorreoInstitucional()%></td></tr>
+                                    <tr><th WIDTH="50" >Celular</th><td><%=es.getCelular()%></td></tr>
+                                    <tr><th WIDTH="50" >Condición</th><td><%=es.getCondicion()%></td></tr>                                                                    
 									</tbody>
 								</table>
 						
@@ -104,30 +101,30 @@
 				      </div>
                     </div>
 
-				<!-- /.container-fluid -->
+                <!-- /.container-fluid -->
 
-			</div>
-			<!-- End of Main Content -->
+            </div>
+            <!-- End of Main Content -->
 
-			<!-- Footer -->
+            <!-- Footer -->
+            
+            <jsp:include page="WEB-INF/layout/footer.jsp"></jsp:include>
+            
+            <!-- End of Footer -->
 
-			<jsp:include page="WEB-INF/layout/footer.jsp"></jsp:include>
+        </div>
+        <!-- End of Content Wrapper -->
 
-			<!-- End of Footer -->
+    </div>
+    <!-- End of Page Wrapper -->
 
-		</div>
-		<!-- End of Content Wrapper -->
-	</div>
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
 
-	<!-- End of Page Wrapper -->
-
-	<!-- Scroll to Top Button-->
-	<a class="scroll-to-top rounded" href="#page-top"> <i
-		class="fas fa-angle-up"></i>
-	</a>
-
-      <!-- Logout Modal-->
-		<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog"
+    <!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog"
 			aria-labelledby="exampleModalLabel" aria-hidden="true">
 			<div class="modal-dialog" role="document">
 				<div class="modal-content">
@@ -147,6 +144,7 @@
 				</div>
 			</div>
 		</div>
+
     <!-- Bootstrap core JavaScript-->
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -163,7 +161,6 @@
     <!-- Page level custom scripts -->
     <script src="js/demo/chart-area-demo.js"></script>
     <script src="js/demo/chart-pie-demo.js"></script>
-
 
 </body>
 </html>

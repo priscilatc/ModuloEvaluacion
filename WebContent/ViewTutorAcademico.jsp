@@ -17,10 +17,10 @@
 		loginUser = (String)session.getAttribute("login");
 
 		DTUsuario dtu = new DTUsuario();
-		DTTutorTecnico dtt = new DTTutorTecnico();
-		VW_est_tutor t = new VW_est_tutor();
+		DTDocente dtd = new DTDocente();
+		VW_est_docente d = new VW_est_docente();
 		
-		t = dtt.getTutorTecnico(dtu.conseguirID(loginUser));
+		d = dtd.getTutorAcademico(dtu.conseguirID(loginUser));
 		
 		if(loginUser.equals(""))
 		{
@@ -81,21 +81,22 @@
 
                     <!-- Content Row -->
                     <div class="row">
-                    	<div class="card shadow mb-4"  style="width: 18rem;">
+                    	<div class="card shadow mb-4"  style="width: 20rem;">
 						<div class="card-header py-3">
 							<h6 class="m-0 font-weight-bold text-primary">Datos Personales</h6>
 						
 						</div>
 						
 							<div class="table-responsive">
-								<table class="table borderless" id="tblInfo" width="130px"
+								<table class="table borderless" id="tblInfo" width="150px"
 									cellspacing="0">															
 									<tbody>									
-									<tr><th WIDTH="50" >Nombres</th><td><%=t.getNombre() %></td></tr>
-									<tr><th WIDTH="50" >Cargo</th><td><%=t.getCargo()%></td></tr>
-                                    <tr><th WIDTH="50" >Correo</th><td><%=t.getCorreo()%></td></tr>
-                                    <tr><th WIDTH="50" >Trato</th><td><%=t.getTrato()%></td></tr>
-                                    <tr><th WIDTH="50" >Organización</th><td><%=t.getOrganizacion()%></td></tr>                                                                    
+									<tr><th WIDTH="50" >Nombres</th><td><%=d.getNombre() %></td></tr>
+									<tr><th WIDTH="50" >Cargo</th><td><%=d.getCargo()%></td></tr>
+                                    <tr><th WIDTH="50" >Correo</th><td><%=d.getCorreo()%></td></tr>
+                                    <tr><th WIDTH="50" >Trato</th><td><%=d.getTrato()%></td></tr>
+                                    <tr><th WIDTH="50" >Categoria</th><td><%=d.getCategoria()%></td></tr>
+                                    <tr><th WIDTH="50" >Coordinación</th><td><%=d.getCoordinacion()%></td></tr>                                                                    
 									</tbody>
 								</table>
 						

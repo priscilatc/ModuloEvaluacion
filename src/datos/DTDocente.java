@@ -8,7 +8,9 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import entidades.Docente;
+import vistas.VW_alumnosasignados_doc;
 import vistas.VW_docente;
+import vistas.VW_est_docente;
 
 public class DTDocente {
 	PoolConexion pc = PoolConexion.getInstance();
@@ -334,5 +336,101 @@ public class DTDocente {
 			}
 		}		
 		return d;
+	}
+	
+	public VW_est_docente getTutorAcademico(int idusuario)
+	{
+		VW_est_docente vwd = new VW_est_docente();
+		String sql = "Select * from public.vista_est_docente where idusuario = ?";
+		
+		try 
+		{
+			c = PoolConexion.getConnection();
+			ps = c.prepareStatement(sql, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE, ResultSet.HOLD_CURSORS_OVER_COMMIT);
+			ps.setInt(1, idusuario);
+			rs = ps.executeQuery();
+			if(rs.next())
+			{
+				vwd.setNombre(rs.getString("nombre"));
+				vwd.setCargo(rs.getString("cargo"));
+				vwd.setTrato(rs.getString("trato"));
+				vwd.setCategoria(rs.getString("categoria"));
+				vwd.setCorreo(rs.getString("correo"));	
+				vwd.setCoordinacion(rs.getString("coordinacion"));
+			}
+			}
+		catch (SQLException e) 
+		{
+			System.err.println("DATOS: error getEst(): " + e.getMessage());
+			e.printStackTrace();
+		}
+		finally 
+		{
+			try 
+			{
+				if(rsD != null)
+				{
+					rsD.close();
+				}
+				if(c != null)
+				{
+					c.close();
+				}
+			} 
+			catch (Exception e2) 
+			{
+				System.err.println("DT Estudiante: Error al cerrar conexion " + e2.getMessage());
+				e2.printStackTrace();
+			}
+		}		
+		return vwd;
+	}
+	
+	public ArrayList<VW_alumnosasignados_doc> getAlumnosAsignados(int idusuario)
+	{
+		ArrayList<VW_alumnosasignados_doc> alumnosasignados = new ArrayList<VW_alumnosasignados_doc>();
+		String sql = "Select * from public.vista_alumnosasignados_doc where idusuario=?";
+		
+		try 
+		{
+			c = PoolConexion.getConnection();
+			ps = c.prepareStatement(sql, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE, ResultSet.HOLD_CURSORS_OVER_COMMIT);
+			ps.setInt(1, idusuario);
+			rs = ps.executeQuery();
+			while(rs.next())
+			{
+				VW_alumnosasignados_doc vwa = new VW_alumnosasignados_doc();
+				vwa.setIdestudiante(rs.getInt("idestudiante"));
+				vwa.setNombre(rs.getString("nombre"));
+				
+				alumnosasignados.add(vwa);
+			}
+			}
+		catch (SQLException e) 
+		{
+			System.err.println("DATOS: error getEst(): " + e.getMessage());
+			e.printStackTrace();
+		}
+		finally 
+		{
+			try 
+			{
+				if(rsD != null)
+				{
+					rsD.close();
+				}
+				if(c != null)
+				{
+					c.close();
+				}
+			} 
+			catch (Exception e2) 
+			{
+				System.err.println("DT Estudiante: Error al cerrar conexion " + e2.getMessage());
+				e2.printStackTrace();
+			}
+		}
+		
+		return alumnosasignados;
 	}
 }

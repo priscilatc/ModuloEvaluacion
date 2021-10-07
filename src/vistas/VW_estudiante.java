@@ -9,6 +9,7 @@ public class VW_estudiante {
 	private String sexo;
 	private String coordinacion;
 	private String usuario;
+	private String carneuca;
 	
 	public int getIdestudiante() {
 		return idestudiante;
@@ -58,4 +59,11 @@ public class VW_estudiante {
 	public void setUsuario(String usuario) {
 		this.usuario = usuario;
 	}
+	public String getCarneuca() {
+		return carneuca;
+	}
+	public void setCarneuca(String carneuca) {
+		this.carneuca = carneuca;
+	}
+	
 }

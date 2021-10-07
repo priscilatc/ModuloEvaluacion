@@ -347,6 +347,54 @@ public class DTUsuario
 		return encontrado;
 	}
 	
+	
+	  public int conseguirID(String usuario) 
+	  { 
+		 
+	  int id=0;
+	  
+	  String sql = "Select * from public.usuario where usuario = ?";
+	  
+	  try { 
+		  c = PoolConexion.getConnection(); 
+		  ps = c.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+	      ps.setString(1, usuario);  
+	      rs = ps.executeQuery();
+	  
+	  if(rs.next()) 
+	  { 
+		  id= rs.getInt("idusuario"); 
+		  System.out.println("ID:" + id);
+		  }
+	  
+	  } catch (Exception e)
+	  {
+		  System.out.println("DATOS: ERROR EN LISTAR Elementos del Banner "+ e.getMessage()); e.printStackTrace(); 
+	  } 
+	  finally{ 
+		  try { 
+			  if(rs != null)
+			  {
+	  rs.close(); 
+	  } 
+			  if(ps != null)
+			  { 
+				  ps.close(); 
+			  } 
+			  if(c != null)
+			  {
+				  PoolConexion.cerrarConexion(c);
+	          }
+	  
+	  } catch (SQLException e) { // TODO Auto-generated catch block
+	  e.printStackTrace(); }
+	  
+	  }
+	  
+	  return id; 
+	  }
+	 
+	
 //	public ArrayList<VW_usuarioinfo> listarInfoUsuario(String nombre ){
 //		ArrayList<VW_usuarioinfo> listainfoUsuario = new ArrayList<VW_usuarioinfo>();
 //		try{
